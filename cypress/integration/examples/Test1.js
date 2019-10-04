@@ -12,8 +12,11 @@ describe('My First Test Suite', function() {
         cy.get('.products').as('productLocator')
         cy.get('@productLocator').find('.product').should('have.length',4)
         cy.get(':nth-child(3) > .product-action > button').click()
-        cy.get('@productLocator').find('.product').eq(2).contains('ADD TO CART').click()
-        console.log('testando aqui')
+       
+        cy.get('@productLocator').find('.product').eq(2).contains('ADD TO CART').click().then(function(){
+          console.log('testando aqui')
+        })
+
         cy.get('@productLocator').find('.product').each(($el, index, $list) => {
           //cy.log($el)
           const textVeg = $el.find('.product-name').text()
@@ -22,6 +25,10 @@ describe('My First Test Suite', function() {
           }
         })
         
+        //assert if logo text is coorectly displayed
+        cy.get('.brand').should('have.text', 'GREENKART')
+
+        //this is to print in logs
         cy.get('.brand').then(function(logoelemnt){
           cy.log(logoelemnt.text())
         })
