@@ -2,5 +2,14 @@
     "defaultCommandTimeout": 6000,
     "pageLoadTimeout": 200000,
     "viewportWidth": 1200,
-    "viewportHeight": 900
+    "viewportHeight": 900,
+    "reporter": "mochawesome",
+    "reporterOptions": {
+      "reportDir": "cypress/results",
+      "overwrite": false,
+      "html": false,
+      "json": true
+    },
+    "baseUrl": "https://barrigarest.wcaquino.me"
+    
 }

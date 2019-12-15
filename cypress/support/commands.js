@@ -23,3 +23,39 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getToken', (user, passwd) => {
+    cy.request({
+        method: 'POST',
+        url: '/signin',
+        body: {
+            email: 'rpf.info@gmail.com',
+            redirionar: false,
+            senha: '123456'
+        }
+    }).its('body.token').should('not.be.empty')
+        .then(token => {
+            return token
+    })
+})
+
+Cypress.Commands.add('resetRest', (recebeToken) => {
+    cy.request({
+        method: 'GET',
+        url: '/reset',
+        headers: { Authorization: 'JWT '+recebeToken }
+    }).its('status').should('be.equal', 200)
+})
+
+Cypress.Commands.add('getContaByName', (name, recebeToken) => {
+    cy.request({
+        method: 'GET',
+        url: '/contas',
+        headers: { Authorization: 'JWT '+recebeToken },
+        qs: {
+            nome: name
+        }
+    }).then(res => {
+        return res.body[0].id
+    })
+})
